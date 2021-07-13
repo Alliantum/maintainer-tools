@@ -1,11 +1,11 @@
 [![CI](https://github.com/OCA/maintainer-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/OCA/maintainer-tools/actions/workflows/ci.yml)
 [![Coverage Status](https://img.shields.io/coveralls/OCA/maintainer-tools.svg)](https://coveralls.io/r/OCA/maintainer-tools?branch=master)
 
-# OCA Maintainers Tools
+# Alliantum Maintainers Tools
 
 ## Installation
 
-    $ git clone git@github.com:OCA/maintainer-tools.git
+    $ git clone git@github.com:Alliantum/maintainer-tools.git
     $ cd maintainer-tools
     $ virtualenv env
     $ . env/bin/activate
@@ -13,19 +13,19 @@
 
 Alternatively if using pipx.
 
-    $ git clone git@github.com:OCA/maintainer-tools.git
+    $ git clone git@github.com:Alliantum/maintainer-tools.git
     $ pipx install ./maintainer-tools
 
-## OCA repositories tools
+## Alliantum repositories tools
 
 These tools are mostly for maintenance purpose only.
-They are used by OCA maintainers to address common operations across all repos.
+They are used by Alliantum maintainers to address common operations across all repos.
 
 **Prerequisite**
 
 Get a token from Github.
 
-    $ oca-github-login USERNAME
+    $ alliantum-github-login USERNAME
 
 
 NOTE: you may have to delete the existing one from
@@ -49,22 +49,22 @@ Prerequisites:
 
 Run the script in "dry-run" mode:
 
-    $ oca-copy-maintainers --dry-run
+    $ alliantum-copy-maintainers --dry-run
 
 Apply the changes on GitHub:
 
-    $ oca-copy-maintainers
+    $ alliantum-copy-maintainers
 
 The first time it runs, it will ask your odoo's username and password.
 You may store them using the `--store` option, but watch out: the password is stored in clear text.
 
 
-### Set labels on OCA repository on GitHub
+### Set labels on Alliantum repository on GitHub
 
 Set standardized labels to ease the issue workflow on all repositories with same colors.
 This tools will also warn you what are the specific labels on some repository
 
-    $ oca-set-repo-labels
+    $ alliantum-set-repo-labels
 
 
 ### Clone all OCA repositories
@@ -106,7 +106,7 @@ They must be put inside a `readme` folder respecting [this structure|./readme].
 eg.
 To generate the final README for the module `auth_keycloak`:
 
-    $ oca-gen-addon-readme --repo-name=server-auth --branch=10.0 --addon-dir=auth_keycloak
+    $ alliantum-gen-addon-readme --repo-name=server-auth --branch=12.0 --addon-dir=auth_keycloak
 
 The result will be a fully PyPI compliant README.rst in the root of your module.
 
@@ -121,7 +121,7 @@ small wrapper around [towncrier](https://pypi.org/project/towncrier/).
 For example, this will update HISTORY.rst for `mis_builder` and `mis_builder_budget`
 with the version found in their manifest:
 
-    $ oca-towncrier --repo=mis-builder --addon-dir=mis_builder --addon-dir=mis_builder_budget --commit
+    $ alliantum-towncrier --repo=mis-builder --addon-dir=mis_builder --addon-dir=mis_builder_budget --commit
 
 
 ### Icon generator
@@ -130,18 +130,18 @@ To provide an icon for our modules we generate them automatically.
 
 To generate the icon for the module `auth_keycloak`:
 
-    $ oca-gen-addon-icon --addon-dir=auth_keycloak
+    $ alliantum-gen-addon-icon --addon-dir=auth_keycloak
 
 A custom icon can be added using the `--src-icon` argument:
 
-    $ oca-gen-addon-icon --addon-dir=auth_keycloak --src-icon=/path/to/custom/icon.png
+    $ alliantum-gen-addon-icon --addon-dir=auth_keycloak --src-icon=/path/to/custom/icon.png
 
 
 ### Auto fix pep8 guidelines
 
 To auto fix pep8 guidelines of your code you can run:
 
-    $ oca-autopep8 -ri PATH
+    $ alliantum-autopep8 -ri PATH
 
 This script overwrite with monkey patch the original script of [autopep8](https://github.com/hhatto/autopep8)
 to support custom code refactoring.
@@ -155,11 +155,11 @@ More info of original autopep8 [here](https://pypi.python.org/pypi/autopep8/)
 
 You can rename snake_case to CamelCase with next command:
 
-    $ oca-autopep8 -ri --select=CW0001 PATH
+    $ alliantum-autopep8 -ri --select=CW0001 PATH
 
 You can delete vim comment
 
-    $ oca-autopep8 -ri --select=CW0002,W391 PATH
+    $ alliantum-autopep8 -ri --select=CW0002,W391 PATH
 
 
 ## Developers
@@ -167,7 +167,7 @@ You can delete vim comment
 As a developer, you want to launch the scripts without installing the
 egg.
 
-    $ git clone git@github.com:OCA/maintainer-tools.git
+    $ git clone git@github.com:Alliantum/maintainer-tools.git
     $ cd maintainer-tools
     $ virtualenv env
     $ . env/bin/activate
@@ -198,24 +198,24 @@ In any addons repo, you can use these pre-commit hooks:
 ```yaml
 # .pre-commit-config.yaml file
 repos:
-  - repo: https://github.com/OCA/maintainer-tools
+  - repo: https://github.com/Alliantum/maintainer-tools
     rev: master # This is just an example; you must use a tag/commit instead!
     hooks:
       # Use each script's `--help` to understand the args
-      - id: oca-gen-addon-readme
+      - id: alliantum-gen-addon-readme
         args:
           - --addons-dir=.
-          - --org-name=OCA
+          - --org-name=Alliantum
           - --repo-name=server-tools
           - --branch=13.0
 
       # This job could easily produce conflicts when it runs on every commit,
       # so it's added as a manual job. If you automate it, beware.
       # See https://pre-commit.com/#confining-hooks-to-run-at-certain-stages
-      - id: oca-gen-addons-table
+      - id: alliantum-gen-addons-table
         stages: [manual]
 
-      - id: oca-gen-addon-icon
+      - id: alliantum-gen-addon-icon
         args:
           - --addons-dir=.
 ```
